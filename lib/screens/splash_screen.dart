@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:random_a_v/services/shared_prefrences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -41,7 +42,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return const Material(
       child: Center(
-        child: CircularProgressIndicator(),
+        child: SpinKitChasingDots(
+          color: Colors.pink,
+          size: 50.0,
+        ),
       ),
     );
   }

@@ -45,7 +45,7 @@ class AuthProvider with ChangeNotifier {
   //
 
   Future<void> addFriend(MyUser friendId) async {
-    _isLoading = true;
+    // _isLoading = true;
     _errorMessage = null;
     // notifyListeners();
     await _database.sendFriendRequest(user.id, friendId.id);
@@ -55,5 +55,11 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
- 
+  //chnage user status provider
+  Future<void> changeStatus(String newstatus) async {
+    await _database.changeStatus(newstatus, user.id);
+    user = await _database.getMyUserFromDatabase(user.id);
+    // _isLoading = false;
+    notifyListeners();
+  }
 }

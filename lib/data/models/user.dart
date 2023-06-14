@@ -8,8 +8,9 @@ class MyUser extends Equatable {
   final String photoUrl;
   final String gender;
   final int amount;
+  final String status;
   final List<MyUser> friends;
-  final List<MyUser> friendRequests;
+  final List<FriendRequest> friendRequests;
 
   const MyUser({
     required this.id,
@@ -17,17 +18,24 @@ class MyUser extends Equatable {
     required this.dob,
     required this.photoUrl,
     required this.gender,
+    this.status = 'Active',
     this.amount = 0,
     this.friends = const [],
     this.friendRequests = const [],
   });
 
-  factory MyUser.fromDatabaseMap(DataSnapshot doc) {
-    final data = doc.value as Map<dynamic, dynamic>;
+  factory MyUser.fromDatabaseMap(data) {
+    // final data = doc.value as Map<dynamic, dynamic>;
 
     final friendData = data['friends'] as List<dynamic>?;
-    final requestorData = data['friendRequests'] as List<dynamic>?;
+    // final requestorData = data['friend_requests'] as List<dynamic>?;
+    final requestorData = data['friend_requests'];
+    List<dynamic>? requestorList;
 
+    if (requestorData is List<dynamic>) {
+      requestorList = requestorData;
+    }
+    print('request ${requestorList}');
     return MyUser(
       id: data['id'],
       name: data['name'],
@@ -35,13 +43,22 @@ class MyUser extends Equatable {
       photoUrl: data['photoUrl'],
       gender: data['gender'],
       amount: data['amount'],
+      status: data['status'] ?? '',
+      // friends: friendData != null
+      //     ? List<MyUser>.from(
+      //         friendData.map((friend) => MyUser.fromDatabaseMap(friend)))
+      //     : [],
+      // friendRequests: requestorData != null
+      //     ? List<FriendRequest>.from(requestorData
+      //         .map((requestor) => FriendRequest.fromJson(requestor)))
+      //     : [],
       friends: friendData != null
           ? List<MyUser>.from(
               friendData.map((friend) => MyUser.fromDatabaseMap(friend)))
           : [],
-      friendRequests: requestorData != null
-          ? List<MyUser>.from(requestorData
-              .map((requestor) => MyUser.fromDatabaseMap(requestor)))
+      friendRequests: requestorList != null
+          ? List<FriendRequest>.from(requestorList
+              .map((requestor) => FriendRequest.fromJson(requestor)))
           : [],
     );
   }
@@ -54,15 +71,16 @@ class MyUser extends Equatable {
       'photoUrl': photoUrl,
       'gender': gender,
       'amount': amount,
+      'status': status,
       'friends': friends.map((friend) => friend.toDatabaseMap()).toList(),
-      'friendRequests':
-          friendRequests.map((requestor) => requestor.toDatabaseMap()).toList(),
+      // 'friendRequests':
+      // friendRequests.map((requestor) => requestor.toDatabaseMap()).toList(),
     };
   }
 
   @override
   List<Object?> get props =>
-      [id, name, dob, photoUrl, gender, friends, friendRequests];
+      [id, name, dob, photoUrl, gender, status, friends, friendRequests];
 }
 
 class FriendRequest {
@@ -78,6 +96,7 @@ class FriendRequest {
     required this.accepted,
   });
   factory FriendRequest.fromJson(Map<String, dynamic> json) {
+    print('json ${json}');
     return FriendRequest(
       id: json['id'],
       senderId: json['senderId'],

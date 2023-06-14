@@ -43,6 +43,7 @@ dependencies:
   path_provider: ^2.0.15
   shared_preferences: ^2.1.1
   intl: ^0.18.1
+  flutter_spinkit: ^5.2.0
   
 
 dev_dependencies:
@@ -70,6 +71,10 @@ flutter:
   assets:
     - assets/images/male.jpg
     - assets/images/female.jpg
+    - assets/images/MALE.png
+    - assets/images/FEMALE.png
+    - assets/images/random.jpg
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

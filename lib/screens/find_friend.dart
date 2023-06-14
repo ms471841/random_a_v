@@ -15,6 +15,7 @@ class _FindFriendScreenState extends State<FindFriendScreen> {
   List<MyUser> users = [];
   String searchQuery = '';
   Database database = Database();
+  String status = 'Add';
 
   void searchUsers(String query) {
     setState(() {
@@ -54,6 +55,11 @@ class _FindFriendScreenState extends State<FindFriendScreen> {
               itemCount: users.length,
               itemBuilder: (context, index) {
                 MyUser user = users[index];
+                final isRequested = user.friendRequests
+                    .where((element) => element.senderId == '1686378166472932')
+                    .toList();
+                print(user.friendRequests);
+                // print(isRequested);
                 return Card(
                   child: ListTile(
                     leading: CircleAvatar(
@@ -65,10 +71,13 @@ class _FindFriendScreenState extends State<FindFriendScreen> {
                       color: Colors.pink,
                       onPressed: () {
                         addFriendToUser(user);
+                        setState(() {
+                          // status = 'Requested';
+                        });
                       },
-                      child: const Text(
-                        'Add ',
-                        style: TextStyle(color: Colors.white),
+                      child: Text(
+                        status,
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
