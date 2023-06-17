@@ -120,16 +120,92 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Image.asset(selectedImage),
-                          const SizedBox(
-                            height: 20,
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               buildSelectableBox(1, 'Female'),
                               buildSelectableBox(2, 'Male'),
                               buildSelectableBox(3, 'Random')
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 300,
+                            width: 300,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              image: const DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage('assets/images/home.gif'),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text('Start a text, Audio or Video chat with '),
+                          const Text('Random Peoples'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                style: ButtonStyle(
+                                  // Customize the shadow color
+                                  shadowColor: MaterialStateProperty.all<Color>(
+                                      Colors.red),
+                                  // Customize the background color
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.blue),
+                                  // Customize the shape (circle in this example)
+                                  shape:
+                                      MaterialStateProperty.all<OutlinedBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                icon: const Icon(Icons.call_outlined),
+                                visualDensity: VisualDensity.standard,
+                                // highlightColor: Colors.pink,
+
+                                // splashColor: Colors.pink,
+                                tooltip: 'Audio Call',
+                              ),
+                              ElevatedButton(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.pink),
+                                  elevation:
+                                      MaterialStateProperty.all<double>(4),
+                                  shape:
+                                      MaterialStateProperty.all<OutlinedBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                  ),
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  child: const Icon(
+                                    Icons.video_call_rounded,
+                                    // color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.message_outlined),
+                                tooltip: 'Text',
+                              ),
                             ],
                           ),
                           Expanded(
@@ -145,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onPressed: () {
                                       _find(authValue.user.id);
                                     },
-                                    child: Text('Start Chat'),
+                                    child: const Text('Start Chat'),
                                   ),
                                 ),
                               ),
@@ -194,18 +270,17 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Container(
         width: 100,
-        height: 40,
+        height: 35,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15
-          ),
+          borderRadius: BorderRadius.circular(15),
           color: isSelected ? Colors.pink : Colors.white,
           border: Border.all(color: Colors.pink),
         ),
         child: Center(
           child: Text(
-            '$type',
+            type,
             style: TextStyle(
-                fontSize: 24, color: isSelected ? Colors.white : Colors.pink),
+                fontSize: 20, color: isSelected ? Colors.white : Colors.pink),
           ),
         ),
       ),
